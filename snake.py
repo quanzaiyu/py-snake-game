@@ -1,5 +1,5 @@
 import pygame
-from constants import GREEN, BLUE, SNAKE_BLOCK
+from constants import GREEN, BLUE, SNAKE_BLOCK, WIDTH, HEIGHT
 
 class Snake:
     def __init__(self, x, y):
@@ -13,6 +13,17 @@ class Snake:
     def move(self):
         self.x += self.dx
         self.y += self.dy
+
+        # 处理边界穿越
+        if self.x >= WIDTH:
+            self.x = 0
+        elif self.x < 0:
+            self.x = WIDTH - SNAKE_BLOCK
+        if self.y >= HEIGHT:
+            self.y = 0
+        elif self.y < 0:
+            self.y = HEIGHT - SNAKE_BLOCK
+
         self.body.append([self.x, self.y])
         if len(self.body) > self.length:
             del self.body[0]

@@ -87,14 +87,25 @@ class Game:
 
     def update(self):
         self.snake.move()
-        if (self.snake.x >= WIDTH or self.snake.x < 0 or
-            self.snake.y >= HEIGHT or self.snake.y < 0 or
-            self.wall.check_collision(self.snake.x, self.snake.y) or
+        
+        # 处理边界穿越
+        if self.snake.x >= WIDTH:
+            self.snake.x = 0
+        elif self.snake.x < 0:
+            self.snake.x = WIDTH - SNAKE_BLOCK
+        if self.snake.y >= HEIGHT:
+            self.snake.y = 0
+        elif self.snake.y < 0:
+            self.snake.y = HEIGHT - SNAKE_BLOCK
+
+        # 检查是否撞到墙或自身
+        if (self.wall.check_collision(self.snake.x, self.snake.y) or
             self.snake.check_collision()):
             self.game_over = True
+
         if self.snake.x == self.food.x and self.snake.y == self.food.y:
             self.snake.grow()
-            self.food.position()
+            self.food.position(self.wall)
             self.scores[self.level - 1] += 1
             if sum(self.scores) % SCORE_PER_LEVEL == 0 and self.level < MAX_LEVEL:
                 self.level += 1
@@ -139,6 +150,8 @@ class Game:
                         if event.key == pygame.K_q:
                             running = False
                         if event.key == pygame.K_r:
-                            self.select_difficulty()  # 重新选择难度
+                            self.select_difficulty()
+                            self.game_over = False  # 重置游戏状态
+                pygame.display.update()  # 确保游戏结束画面更新
             self.clock.tick(self.difficulty)
         pygame.quit()
