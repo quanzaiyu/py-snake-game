@@ -3,7 +3,8 @@ WHITE = (255, 255, 255)
 RED = (255, 0, 0)
 GREEN = (0, 255, 0)
 BLACK = (0, 0, 0)
-BLUE = (0, 0, 255)  # 新增颜色用于蛇头
+BLUE = (0, 0, 255)  # 蛇头颜色
+GRAY = (128, 128, 128)  # 墙的颜色
 
 # 游戏窗口设置
 WIDTH = 800
@@ -16,3 +17,7 @@ SNAKE_BLOCK = 20
 EASY = 10
 MEDIUM = 15
 HARD = 20
+
+# 关卡设置
+MAX_LEVEL = 10
+SCORE_PER_LEVEL = 10
